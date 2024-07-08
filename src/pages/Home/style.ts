@@ -148,33 +148,32 @@ export const SecondSectionInSection = styled.div`
 `
 
 export const Coffees = styled.div`
- h1 {
-  color: ${({ theme }) => theme.cores.base_subtitle};
-  font-family: "Baloo 2", sans-serif;
-  font-size: 2rem;
-  font-style: normal;
-  font-weight: 800;
-  line-height: 130%;
- }
-
- .firstSection {
-  margin-bottom: 3.38rem;
- }
-
- .principalSection {
   width: 100%;
-  display: flex;
-  flex-wrap: wrap;
+  height: auto;
 
-  div {
-   display: flex;
-   flex-direction: column;
-   padding: 1.25rem;
-   width: 16rem;
-   height: 19.375rem;
-   flex-shrink: 0;
-   border-radius: 0.375rem 2.25rem;
-   background: ${({ theme }) => theme.cores.base_card};
+  h1 {
+    color: ${({ theme }) => theme.cores.base_subtitle};
+    font-family: "Baloo 2", sans-serif;
+    font-size: 2rem;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 130%;
   }
- }
-`
+
+  .firstSection {
+    margin-bottom: 3.38rem;
+  }
+
+  #principalSection {
+    
+    
+    div {
+     img {
+      width: 7.5rem;
+      height: 7.5rem;
+      flex-shrink: 0;
+     }
+    }
+  }
+`;
+

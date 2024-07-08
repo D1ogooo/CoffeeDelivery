@@ -1,9 +1,7 @@
 import styled from 'styled-components'
 import { Container } from '../../style/global'
 
-export const HeaderContainer = styled(Container)`
- 
-`
+export const HeaderContainer = styled(Container)``
 
 export const Internal = styled.div`
  display: flex;
@@ -15,19 +13,19 @@ export const Internal = styled.div`
 
  section:nth-child(2) {
   display: flex;
-  gap: 0.75rem;
+  gap: .75rem;
 
   div:nth-child(1) {
    display: flex;
-   padding: 0.5rem;
+   padding: .5rem;
    justify-content: center;
    align-items: center;
-   gap: 0.25rem;
+   gap: .25rem;
    img {
     width: 2rem;
     height: 2rem;
    }
-   border-radius: 0.375rem;
+   border-radius: .375rem;
    background: ${({ theme }) => theme.cores.purple_light};
    p {
     color: ${({ theme }) => theme.cores.puple_dark};
@@ -42,11 +40,29 @@ export const Internal = styled.div`
   div:nth-child(2) {
    cursor: pointer;
    display: flex;
-   padding: 0.5rem;
+   padding: .5rem;
    justify-content: center;
    align-items: center;
-   border-radius: 0.375rem;
+   border-radius: .375rem;
    background: ${({ theme }) => theme.cores.yellow_light};
+   
+   section {
+    width: 1.5rem;
+    height: 1.5rem;
+    position: absolute;
+    margin-top: -3.125rem; 
+    margin-left: 2.5rem;
+    padding-top: .12rem;
+    border-radius: 62.5rem;
+    background: ${({ theme }) => theme.cores.yellow_dark};
+
+    p {
+     margin: 0 auto;
+     color: ${({ theme }) => theme.cores.white};
+     font-family: 'Roboto';
+     font-weight: 700;
+    }
+   }
 
    img {
     width: 1.8rem;

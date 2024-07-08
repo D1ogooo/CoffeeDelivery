@@ -4,10 +4,10 @@ export const Theme = {
   yellow: "#DBAC2C",
   yellow_light: "#F1E9C9",
 
-  puple_dark: "#4B2995",
+  purple_dark: "#4B2995",
   purple: "#8047F8",
   purple_light: "#EBE5F9",
-
+  
   base_title: "#272221",
   base_subtitle: "#403937",
   base_text: "#574F4D",
