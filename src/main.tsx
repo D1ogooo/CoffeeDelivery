@@ -13,6 +13,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
      <CoffeeRoutes/>
      <GlobalStyle/>
    </ThemeProvider>
-
   </React.StrictMode>,
 )
