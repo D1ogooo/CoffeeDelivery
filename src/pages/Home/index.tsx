@@ -1,7 +1,8 @@
-import { Main } from './style';
+import { FirstSectionInSection, Main, SecondSectionInSection, Coffees } from './style';
 import { Container } from '../../style/global';
+import { Contador } from '../../components/Contador';
+import { CoffeeDatabase } from '../../database/db';
 import PrincipalImage from '../../images/princpalImage.svg';
-
 import PrimeiroDetail from '../../images/IconCard_white.svg'
 import SegundoDetail from '../../images/relogio_icon.svg'
 import TerceiroDetail from '../../images/embalagem_icon.svg'
@@ -14,29 +15,49 @@ function Home() {
         <div className="left">
           <h1>Encontre o café perfeito para qualquer hora do dia</h1>
           <h3>Com o Coffee Delivery você recebe seu café onde estiver, a qualquer hora</h3>
-           <section>
+          <section>
+            <FirstSectionInSection>
             <div>
               <img src={PrimeiroDetail} alt="" />
               <p>Compra simples e segura</p>
-             </div>
+            </div>
             <div>
               <img src={SegundoDetail} alt="" />
               <p>Entrega rápida e rastreada</p>
-             </div>
+            </div>
+            </FirstSectionInSection>
+            <SecondSectionInSection>
             <div>
               <img src={TerceiroDetail} alt="" />
               <p>Embalagem mantém o café intacto</p>
-             </div>
+            </div>
             <div>
               <img src={QuartoDetail} alt="" />
               <p>O café chega fresquinho até você</p>
-             </div>
-           </section>
+            </div>
+            </SecondSectionInSection>
+          </section>
         </div>
         <div className='right'>
           <img src={PrincipalImage} alt="Imagem Principal" />
         </div>
       </Main>
+      <Coffees>
+       <section className='firstSection'>
+        <h1>Nossos cafés</h1>
+       </section>
+       <section id='principalSection'>
+       {CoffeeDatabase.map((card) => (
+        <div key={card.id}>
+         <img src={card.img} alt="" />
+         <p>{card.tipo}</p>
+         <h2>{card.title}</h2>
+         <h3>{card.explicacao}</h3>
+         <Contador />
+        </div>))}
+        
+       </section>
+      </Coffees>
     </Container>
   );
 }

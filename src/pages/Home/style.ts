@@ -9,10 +9,9 @@ export const Main = styled.section`
   width: 50%;
   section {
    display: flex;
-   width: 14.4375rem;
+   flex-wrap: wrap;
    align-items: center;
-   gap: 0.75rem;
-   
+   gap: 2.5rem;
   }
 
   h1 {
@@ -24,6 +23,7 @@ export const Main = styled.section`
    line-height: 130%;
    margin-bottom: 1rem;
   }
+
   h3 {
    color: ${({ theme }) => theme.cores.base_subtitle};
    font-family: 'Roboto';
@@ -39,6 +39,142 @@ export const Main = styled.section`
    width: 40.75rem;
    height: auto;
    flex-shrink: 0;
+  }
+ }
+`
+
+export const FirstSectionInSection = styled.div`
+ display: flex;
+ flex-direction: column;
+ gap: 1.25rem;
+
+ div:nth-child(1) {
+ display: flex;
+ align-items:center;
+ flex: 1 0 0;
+ gap: 0.75rem;
+ color: ${({ theme }) => theme.cores.base_text};
+ font-family: 'Roboto';
+ font-size: 1rem;
+ font-style: normal;
+ font-weight: 400;
+ line-height: 130%;
+
+  img {
+   display: flex;
+   padding: 0.5rem;
+   justify-content: center;
+   align-items: center;
+   gap: 0.5rem;
+   border-radius: 62.5rem;
+   background: ${({ theme }) => theme.cores.yellow_dark};
+  }
+ }
+
+ div:nth-child(2) {
+ display: flex;
+ align-items:center;
+ flex: 1 0 0;
+ gap: 0.75rem;
+ color: ${({ theme }) => theme.cores.base_text};
+ font-family: 'Roboto';
+ font-size: 1rem;
+ font-style: normal;
+ font-weight: 400;
+ line-height: 130%;
+
+  img {
+   display: flex;
+   padding: 0.5rem;
+   justify-content: center;
+   align-items: center;
+   gap: 0.5rem;
+   border-radius: 62.5rem;
+   background: ${({ theme }) => theme.cores.yellow};
+  }
+ }
+`
+
+export const SecondSectionInSection = styled.div`
+ display: flex;
+ flex-direction: column;
+ gap: 1.25rem;
+
+ div:nth-child(1) {
+ display: flex;
+ align-items:center;
+ flex: 1 0 0;
+ gap: 0.75rem;
+ color: ${({ theme }) => theme.cores.base_text};
+ font-family: 'Roboto';
+ font-size: 1rem;
+ font-style: normal;
+ font-weight: 400;
+ line-height: 130%;
+ 
+  img {
+   display: flex;
+   padding: 0.5rem;
+   justify-content: center;
+   align-items: center;
+   gap: 0.5rem;
+   border-radius: 62.5rem;
+   background: ${({ theme }) => theme.cores.base_text};
+  }
+ }
+
+ div:nth-child(2) {
+ display: flex;
+ align-items:center;
+ flex: 1 0 0;
+ gap: 0.75rem;
+ color: ${({ theme }) => theme.cores.base_text};
+ font-family: 'Roboto';
+ font-size: 1rem;
+ font-style: normal;
+ font-weight: 400;
+ line-height: 130%;
+ 
+  img {
+   display: flex;
+   padding: 0.5rem;
+   justify-content: center;
+   align-items: center;
+   gap: 0.5rem;
+   border-radius: 62.5rem;
+   background: ${({ theme }) => theme.cores.purple};
+  }
+ }
+`
+
+export const Coffees = styled.div`
+ h1 {
+  color: ${({ theme }) => theme.cores.base_subtitle};
+  font-family: "Baloo 2", sans-serif;
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 130%;
+ }
+
+ .firstSection {
+  margin-bottom: 3.38rem;
+ }
+
+ .principalSection {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+
+  div {
+   display: flex;
+   flex-direction: column;
+   padding: 1.25rem;
+   width: 16rem;
+   height: 19.375rem;
+   flex-shrink: 0;
+   border-radius: 0.375rem 2.25rem;
+   background: ${({ theme }) => theme.cores.base_card};
   }
  }
 `
