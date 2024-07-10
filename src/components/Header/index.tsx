@@ -3,14 +3,9 @@ import { HeaderContainer, Internal } from './style'
 import Logo from '../../images/Logo.svg'
 import IconLcal from '../../images/Icon_local.svg'
 import YellowCart from '../../images/IconCard_yellow.svg'
-import { useEffect } from 'react'
 
 export const Header = () => {
  const { items } = useCounter()
- 
-//  useEffect(() => {
-//   ShowItens
-//  },[ShowItens])
 
  return (
   <>

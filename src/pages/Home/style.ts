@@ -165,15 +165,107 @@ export const Coffees = styled.div`
   }
 
   #principalSection {
+    gap: 2rem;
+    width: 100%;
+    display: flex;
+    justify-items: flex-start;
+    flex-wrap: wrap;
     
-    
-    div {
-     img {
-      width: 7.5rem;
-      height: 7.5rem;
-      flex-shrink: 0;
-     }
+    h2 {
+     color: ${({theme}) => theme.cores.base_subtitle};
+     text-align: center;
+     font-family: "Baloo 2";
+     font-size: 1.25rem;
+     font-style: normal;
+     font-weight: 700;
+     line-height: 130%;
+     margin-bottom: 0.5rem;
     }
+
+    h3 {
+      color: ${({theme}) => theme.cores.base_label};
+      text-align: center;
+      font-family: 'Roboto';
+      font-size: 0.875rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 130%;
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+      margin-bottom: 2.06rem;
+    }
+
+   .card {
+    border-radius: 0.375rem 2.25rem;
+    background: ${({ theme }) => theme.cores.base_card};
+    width: 16rem;
+    height: 19.375rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    .coffee_image {
+     margin-top: -1.5625rem;
+     margin-bottom: 0.75rem;
+    }
+   }
   }
 `;
 
+export const Tipos = styled.section`
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: .3rem;
+
+ .primeirotipo {
+  display: flex;
+  padding: 0.25rem 0.5rem;
+  justify-content: center;
+  align-items: center;
+
+  color: ${({theme}) => theme.cores.yellow_dark};
+  font-family: 'Roboto';
+  font-size: 0.625rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 130%;
+  text-transform: uppercase;
+
+  border-radius: 6.25rem;
+  background: ${({theme}) => theme.cores.yellow_light};
+ }
+
+ .segundotipo {
+  display: flex;
+  padding: 0.25rem 0.5rem;
+  justify-content: center;
+  align-items: center;
+
+  color: ${({theme}) => theme.cores.yellow_dark};
+  font-family: 'Roboto';
+  font-size: 0.625rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 130%;
+  text-transform: uppercase;
+
+  border-radius: 6.25rem;
+  background: ${({theme}) => theme.cores.yellow_light};
+ }
+ .terceirotipo {
+  display: flex;
+  padding: 0.25rem 0.5rem;
+  justify-content: center;
+  align-items: center;
+
+  color: ${({theme}) => theme.cores.yellow_dark};
+  font-family: 'Roboto';
+  font-size: 0.625rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 130%;
+  text-transform: uppercase;
+
+  border-radius: 6.25rem;
+  background: ${({theme}) => theme.cores.yellow_light};
+ }
+`
