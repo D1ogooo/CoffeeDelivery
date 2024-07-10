@@ -1,3 +1,4 @@
+import { Header } from '../../components/Header';
 import { FirstSectionInSection, Main, SecondSectionInSection, Coffees, Tipos } from './style';
 import { Container } from '../../style/global';
 import { Contador } from '../../components/Contador';
@@ -10,6 +11,8 @@ import QuartoDetail from '../../images/cafe_icon.svg'
 
 function Home() {
   return (
+   <>
+    <Header/>
     <Container>
       <Main>
         <div className="left">
@@ -64,7 +67,8 @@ function Home() {
         </section>
       </Coffees>
     </Container>
-  );
+   </>
+  )
 }
 
 export default Home;

@@ -1,7 +1,9 @@
 import styled from 'styled-components'
 import { Container } from '../../style/global'
+import { Link } from 'react-router-dom'
 
 export const HeaderContainer = styled(Container)``
+export const LogoSection = styled(Link)``
 
 export const Internal = styled.div`
  display: flex;
@@ -36,9 +38,11 @@ export const Internal = styled.div`
     line-height: 130%;
    }
   }
-  
-  div:nth-child(2) {
-   cursor: pointer;
+ }
+`
+
+export const DivCart = styled(Link)`
+ cursor: pointer;
    display: flex;
    padding: .5rem;
    justify-content: center;
@@ -68,6 +72,4 @@ export const Internal = styled.div`
     width: 1.8rem;
     height: 1.8rem;
    }
-  }
- }
 `

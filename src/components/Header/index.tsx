@@ -1,5 +1,5 @@
 import { useCounter } from '../../hooks/useCounter'
-import { HeaderContainer, Internal } from './style'
+import { HeaderContainer, Internal, DivCart, LogoSection } from './style'
 import Logo from '../../images/Logo.svg'
 import IconLcal from '../../images/Icon_local.svg'
 import YellowCart from '../../images/IconCard_yellow.svg'
@@ -12,20 +12,20 @@ export const Header = () => {
    <div style={{ width: '100%', marginBottom: '5.75rem' }}>
     <HeaderContainer>
      <Internal>
-      <section>
+      <LogoSection to='/'>
        <img src={Logo} alt="" />
-      </section>
+      </LogoSection>
       <section>
        <div>
         <img src={IconLcal} alt="" />
         <p>Porto Alegre, RS</p>
        </div>
-       <div>
+       <DivCart to='/checkout'>
         <img src={YellowCart} alt="" />
         <section>
         <p>{items.length}</p>
         </section>
-       </div>
+        </DivCart>
       </section>
      </Internal>
     </HeaderContainer>
