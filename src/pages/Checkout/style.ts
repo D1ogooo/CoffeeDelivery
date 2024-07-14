@@ -292,12 +292,18 @@ export const RightContent = styled.div`
  display: flex;
  width: 28rem;
  height: 31.125rem;
- padding: 2.5rem;
+ padding: 3.5rem;
  flex-direction: column;
  align-items: flex-start;
  gap: 1.5rem;
  border-radius: 0.375rem 2.75rem;
  background: var(--Base-Card, #F3F2F2);
+
+ .ContainerCoffee {
+  display: 'flex';
+  /* flex-direction: column; */
+  height: '590px';
+ }
 `
 
 export const ThirdLeft = styled.div`
@@ -377,5 +383,76 @@ export const Component = styled.div`
   border-radius: 0.375rem;
   border: 1px solid var(--Brand-Purple, #8047F8);
   background: var(--Brand-Purple-Light, #EBE5F9);
+ }
+`
+
+export const PrecoContainer = styled.div`
+ width: 100%;
+ position: relative;
+ bottom: 0;
+ display: flex;
+ flex-direction: column;
+ gap: 0.75rem;
+ .confirmarPedido {
+   cursor: pointer;
+   width: 100%;
+   display: flex;
+   padding: 0.75rem 0.5rem;
+   justify-content: center;
+   align-items: center;
+   gap: 0.25rem;
+   align-self: stretch;
+   color: var(--Base-White, #FFF);
+   font-family: 'Roboto';
+   font-size: 0.875rem;
+   font-style: normal;
+   font-weight: 700;
+   line-height: 160%;
+   text-transform: uppercase;
+   border-radius: 0.375rem;
+   border: none;
+   background: var(--Brand-Yellow, #DBAC2C);
+ }
+ 
+ div:nth-child(1) {
+  display: flex;
+  justify-content: space-between;
+  p {
+   color: var(--Base-Text, #574F4D);
+   text-align: right;
+   font-family: Roboto;
+   font-size: 0.875rem;
+   font-style: normal;
+   font-weight: 400;
+   line-height: 130%; /* 1.1375rem */
+  }
+ }
+ 
+ div:nth-child(2) {
+  display: flex;
+  justify-content: space-between;
+  p {
+   color: var(--Base-Text, #574F4D);
+   text-align: right;
+   font-family: Roboto;
+   font-size: 0.875rem;
+   font-style: normal;
+   font-weight: 400;
+   line-height: 130%; /* 1.1375rem */
+  }
+ }
+
+ div:nth-child(3) {
+  display: flex;
+  justify-content: space-between;
+  p {
+   color: var(--Base-Subtitle, #403937);
+   text-align: right;
+   font-family: 'Roboto';
+   font-size: 1.25rem;
+   font-style: normal;
+   font-weight: 700;
+   line-height: 130%; /* 1.1375rem */
+  }
  }
 `

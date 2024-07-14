@@ -19,18 +19,20 @@ function PedidoFinalizado() {
       </section>
       <section>{/* segundo section */}
        <div> {/* primeira div */}
-       <p>Entrega em <span>Rua João Daniel Martinelli, 102</span><br></br>Farrapos - Porto Alegre, RS</p>
-        <div>
+        <p>Entrega em <span>Rua João Daniel Martinelli, 102</span><br></br>Farrapos - Porto Alegre, RS</p>
+        <div style={{  backgroundColor: "#8047F8" }}>
          <img src={LocalImage} alt="" />
         </div>
        </div>
        <div> {/* segunda div */}
-        <div>
+        <p>Previsão de entrega <br></br><span>20 min - 30 min</span></p>
+        <div style={{ backgroundColor: '#DBAC2C' }}>
          <img src={RelogioImage} alt="" />
         </div>
        </div>
        <div> {/* terceira div */}
-        <div>
+        <p>Pagamento na entrega<br></br><span>Cartão de Crédito</span></p>
+        <div style={{ backgroundColor: '#C47F17'}}>
          <img src={SifraoImage} alt="" />
         </div>
        </div>

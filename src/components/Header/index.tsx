@@ -1,7 +1,7 @@
 import { useCounter } from '../../hooks/useCounter'
 import { HeaderContainer, Internal, DivCart, LogoSection } from './style'
 import Logo from '../../images/Logo.svg'
-import IconLcal from '../../images/IconRoxo.svg'
+import IconLocal from '../../images/IconRoxo.svg'
 import YellowCart from '../../images/IconCard_yellow.svg'
 
 export const Header = () => {
@@ -17,7 +17,7 @@ export const Header = () => {
       </LogoSection>
       <section>
        <div>
-        <img src={IconLcal} alt="" />
+        <img src={IconLocal} alt="" />
         <p>Porto Alegre, RS</p>
        </div>
        <DivCart to='/checkout'>
