@@ -103,6 +103,17 @@ export const LeftContent = styled.div`
 `
 
 export const SecondLeft = styled.div`
+ .errors {
+  color: red;
+  font-family: "Baloo 2";
+  font-size: .9rem;
+  /* margin-bottom: ;
+  margin-top: ;
+  display: flex; */
+  /* width: 100%;
+  height: auto; */
+ }
+
  form {
   display: flex;
   flex-direction: column;
@@ -301,8 +312,10 @@ export const RightContent = styled.div`
 
  .ContainerCoffee {
   display: 'flex';
-  /* flex-direction: column; */
-  height: '590px';
+  width: 100%;
+  height: 13.75rem;
+  overflow-y: auto;
+  padding: 10px;
  }
 `
 

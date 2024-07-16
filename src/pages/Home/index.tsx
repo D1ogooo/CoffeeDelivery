@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Header } from '../../components/Header';
 import { FirstSectionInSection, Main, SecondSectionInSection, Coffees, Tipos } from './style';
 import { Container } from '../../style/global';
