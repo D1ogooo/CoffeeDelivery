@@ -7,10 +7,11 @@ a ideia é que as pessoas possam selecionar o café desejado junto com sua quant
 a entrega será feito ao cliente
 
 💻 Tecnologias Utilizadas:
-
+```
 - TypesScript
 - React
 - React-router-dom
 - React-hook-form
 - Zod
 - Styled-components
+```
