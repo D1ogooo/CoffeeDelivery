@@ -1,3 +1,7 @@
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
 import { Header } from "../../components/Header"
 import { CheckoutContainer, Checkout, LeftContent, RightContent, SecondLeft, ThirdLeft, CoffeesContent, PrecoContainer } from "./style"
 import { Left, Right, FirstLeft, Component } from "./style"
@@ -8,9 +12,64 @@ import cartaoImage from '../../images/Icon_cartaodecredito.svg'
 import casaLotericaImage from '../../images/Icon_caixaloterica.svg'
 import dinheiroImage from '../../images/Icon_notadedinheiro.svg'
 import { ContadorCheckout } from "../../components/ContadorCheckout"
-import { CoffeeDatabase } from "../../database/db"
+
+const productsFilterSchema = z.object({
+  cep: z.string().min(8, {
+   message: "O CEP deve conter exatamente 8 dígitos."
+  }).max(8, {
+   message: "O CEP deve conter exatamente 8 dígitos."
+  }),
+  rua: z.string().min(1, {
+   message: "Declare o nome da rua."
+  }),
+  numero: z.number().min(1, {
+   message: "Declare o numero."
+  }),
+  complemento: z.string().optional(),
+  bairro: z.string().min(1, { 
+   message: "Declare o bairro."
+  }),
+  cidade: z.string().min(1, { 
+   message: "Declare a cidade."
+  }),
+  uf: z.string().min(1, {
+   message: "O UF deve conter exatamente 2 caracteres."
+  }).max(2, {
+   message: "O UF deve conter exatamente 2 caracteres."
+  })
+});
+
+type productsFilterSchema = z.infer<typeof productsFilterSchema>
 
 function CheckOut() {
+ const [formattedCep, setFormattedCep] = useState<string>('');
+ const [isCepBlocked, setIsCepBlocked] = useState<boolean>(false);
+ const { register, handleSubmit, setValue } = useForm<productsFilterSchema>({
+  resolver: zodResolver(productsFilterSchema)
+ })
+
+ const handleCepChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  let cep = event.target.value.replace(/\D/g, '');
+  
+  if (cep.length === 8) {
+   cep = cep.replace(/(\d{5})(\d{3})/, '$1-$2');
+  }
+
+  if (cep.length > 8) {
+   setIsCepBlocked(true)
+  } else {
+   setIsCepBlocked(false)
+  }
+
+  setFormattedCep(cep);
+
+  setValue('cep', cep, { shouldValidate: true, shouldDirty: true });
+};
+ 
+ function handleFilterProducts(data: productsFilterSchema) {
+  console.log(data)
+ }
+
  return (
   <>
    <Header/>
@@ -24,30 +83,30 @@ function CheckOut() {
        <p><span>Endereço de Entrega</span><br></br> Informe o endereço onde deseja receber seu pedido</p>
       </FirstLeft>
       <SecondLeft>
-       <form>
+       <form onSubmit={handleSubmit(handleFilterProducts)}>
         <div> {/* primeira div */}
-         <input type="text" placeholder="CEP"/>
+         <input type="text" placeholder="CEP" maxLength={9} value={formattedCep} {...register('cep')} onChange={handleCepChange} on/>
         </div>
          <div> {/* segunda div */}
-          <input type="text" placeholder="Rua"/>
+          <input type="text" placeholder="Rua" {...register('rua')}/>
          </div>
         <div> {/* terceira div */}
          <section>
-          <input type="text" placeholder="Número"/>
+          <input type="text" placeholder="Número" {...register('numero')}/>
          </section>
          <section>
-          <input type="text" placeholder="Complemento"/>
+          <input type="text" placeholder="Complemento" {...register('complemento')}/>
          </section>
         </div>
         <div> {/* quarta div */}
          <section>
-          <input type="text" placeholder="Bairro"/>
+          <input type="text" placeholder="Bairro" {...register('bairro')}/>
          </section>
          <section>
-          <input type="text" placeholder="Cidade"/>
+          <input type="text" placeholder="Cidade" {...register('cidade')}/>
          </section>
          <section>
-          <input type="text" placeholder="UF"/>
+          <input type="text" placeholder="UF" maxLength={2} {...register('uf')}/>
          </section>
         </div>
        </form>
