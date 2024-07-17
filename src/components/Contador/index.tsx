@@ -37,7 +37,6 @@ export const Contador = ({ Posicao, Image, Title }: DataCount) => {
     Title: Title,
    }
 
-   console.log(ItemCard)
    AddItem(ItemCard)
   }
 

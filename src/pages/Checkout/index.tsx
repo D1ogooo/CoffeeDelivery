@@ -106,23 +106,27 @@ function CheckOut() {
                     {errors.cep && <p className='errors'>{errors.cep.message}</p>}
                   </div>
                   <div>
-                    <input type="text" placeholder="Rua" {...register('rua')} onChange={() => Rua()}/>
+                    <input type="text" placeholder="Rua" {...register('rua')} onChange={Rua}/>
                     {errors.rua && <p className='errors'>{errors.rua.message}</p>}
                   </div>
                   <div>
                     <section>
-                      <input type="text" placeholder="Número" {...register('numero')} onChange={() => Numero()}/>
+                      <input type="text" placeholder="Número" {...register('numero')} onChange={Numero}/>
+                      {errors.numero && <p className='errors'>{errors.numero.message}</p>}
                     </section>
                     <section>
-                      <input type="text" placeholder="Complemento" {...register('complemento')} onChange={() => Complemento()}/>
+                      <input type="text" placeholder="Complemento" {...register('complemento')} onChange={Complemento}/>
+                      {errors.complemento && <p className='errors'>{errors.complemento.message}</p>}
                     </section>
                   </div>
                   <div>
                     <section>
-                      <input type="text" placeholder="Bairro" {...register('bairro')} onChange={() => Bairro()}/>
+                      <input type="text" placeholder="Bairro" {...register('bairro')} onChange={Bairro}/>
+                      {errors.bairro && <p className='errors'>{errors.bairro.message}</p>}
                     </section>
                     <section>
-                      <input type="text" placeholder="Cidade" {...register('cidade')} onChange={() => Cidade()}/>
+                      <input type="text" placeholder="Cidade" {...register('cidade')} onChange={Cidade}/>
+                      {errors.cidade && <p className='errors'>{errors.cidade.message}</p>}
                     </section>
                     <section>
                       <input type="text" placeholder="UF" maxLength={2} {...register('uf')}/>
@@ -181,19 +185,21 @@ function CheckOut() {
                </Inexistente>}
               </div>
               <PrecoContainer>
-                <div>
-                  <p>Total de itens</p>
-                  <p>R$ 29.70</p>
-                </div>
-                <div>
-                  <p>Entrega</p>
-                  <p>R$ 3.50</p>
-                </div>
-                <div>
-                  <p>Total</p>
-                  <p>R$ 33.20</p>
-                </div>
-                <button type="submit" className="confirmarPedido">Confirmar Pedido</button>
+               <div>
+                <p>Total de itens</p>
+                <p>R$ {items.reduce((total, item) => total + (item.quantiti * 9.9), 0).toFixed(2)}</p>
+               </div>
+               <div>
+                <p>Entrega</p>
+                <p>R$ 3.50</p>
+               </div>
+               <div>
+                <p>Total</p>
+                <p>R$ {(items.reduce((total, item) => total + (item.quantiti * 9.9), 0) + 3.5).toFixed(2)}</p>
+               </div>
+               <button type="submit" className="confirmarPedido" >
+                Confirmar Pedido
+               </button>
               </PrecoContainer>
             </RightContent>
           </Right>
