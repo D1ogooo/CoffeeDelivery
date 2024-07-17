@@ -14,7 +14,13 @@ type ActionType = {
  type: 'Increment' | 'Decrement';
 };
 
-export const Contador = ({ Posicao }: { Posicao: string }) => {
+type DataCount = {
+ Posicao: string;
+ Image: string;
+ Title: string;
+}
+
+export const Contador = ({ Posicao, Image, Title }: DataCount) => {
   const { AddItem } = useCounter()
   const initialState: StateType = { count: 0 };
   
@@ -23,6 +29,18 @@ export const Contador = ({ Posicao }: { Posicao: string }) => {
    initialState
   );
  
+  function Adicionar (id: string, quantiti: number, Image: string, Title: string) {
+   const ItemCard = {
+    id: id,
+    quantiti: quantiti,
+    Image: Image,
+    Title: Title,
+   }
+
+   console.log(ItemCard)
+   AddItem(ItemCard)
+  }
+
   return (
     <Container>
       <Preco>
@@ -33,7 +51,7 @@ export const Contador = ({ Posicao }: { Posicao: string }) => {
        <p>{quantities.count}</p>
        <img src={DecrementarIcon} className="decrement" alt="Decrementar" onClick={() => dispatch({ type: 'Decrement' })}/>
       </Count>
-      <CartStyle onClick={() => AddItem(String(Posicao))}>
+      <CartStyle onClick={() => Adicionar(Posicao, quantities.count, Image, Title)}>
        <img src={CartIcon} alt="" />
       </CartStyle>
      </Container>

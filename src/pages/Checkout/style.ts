@@ -312,10 +312,10 @@ export const RightContent = styled.div`
 
  .ContainerCoffee {
   display: 'flex';
-  width: 100%;
-  height: 13.75rem;
+  width: 100%; 
+  height: 250px;
   overflow-y: auto;
-  padding: 10px;
+  padding-right: 10px;
  }
 `
 
@@ -338,6 +338,7 @@ export const CoffeesContent = styled.div`
  display: flex;
  justify-content: space-between;
  gap: 1.25rem;
+ margin-top: 1rem;
 
  .ImageCoffee {
   width: 4rem;

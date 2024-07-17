@@ -1,37 +1,25 @@
-import { useReducer, Reducer } from "react";
-import { IncludeReducer } from "../../reducers/Incluir";
+import { useCounter } from "../../hooks/useCounter";
 import { Container, CartStyle, Count } from "./style";
 import AdicionarIcon from '../../images/IncrementIcon.svg';
 import DecrementarIcon from '../../images/DecrementIcon.svg';
 import IconLixeiraRoxa from '../../images/IconLixeiraRoxa.svg'
-import { useCounter } from "../../hooks/useCounter";
 
-type StateType = {
- count: number;
-};
+interface TypeCounter {
+  ItemId: string;
+}
 
-type ActionType = {
- type: 'Increment' | 'Decrement';
-};
+export const ContadorCheckout = ({ ItemId }: TypeCounter) => {
+  const { items, RemoveItem, Increment, Decrement } = useCounter()
 
-export const ContadorCheckout = ({ Posicao }: { Posicao: string }) => {
-  // const { AddItem } = useCounter()
-  const initialState: StateType = { count: 0 };
-  
-  const [quantities, dispatch] = useReducer(
-   IncludeReducer as Reducer<StateType, ActionType>,
-   initialState
-  );
- 
   return (
      <>
     <Container>
       <Count>
-       <img src={AdicionarIcon} className="increment" alt="Incrementar" onClick={() => dispatch({ type: 'Increment' })}/>
-       <p>{quantities.count}</p>
-       <img src={DecrementarIcon} className="decrement" alt="Decrementar" onClick={() => dispatch({ type: 'Decrement' })}/>
+       <img src={AdicionarIcon} className="increment" alt="Incrementar" onClick={() => Increment(ItemId)}/>
+       <p>{items.find(item => item.id === ItemId)?.quantiti || 0}</p>
+       <img src={DecrementarIcon} className="decrement" alt="Decrementar" onClick={() => Decrement(ItemId)}/>
       </Count>
-      <CartStyle>
+      <CartStyle onClick={() => RemoveItem(ItemId)}>
        <img src={IconLixeiraRoxa} alt="" />
        <p>Remover</p>
       </CartStyle>

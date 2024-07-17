@@ -1,24 +1,52 @@
-import { useState, useContext, createContext, ReactNode } from "react";
+import { useState, useContext, createContext } from "react";
+import type { CounterContextType, Item, ProviderProps } from "../@type/Tipagens";
 
-type CounterContextType = {
-  items: string[];
-  AddItem: (id: string) => void;
+const initialContext: CounterContextType = {
+  items: [],
+  AddItem: () => {},
+  RemoveItem: () => {},
+  Increment: () => {},
+  Decrement: () => {},
+  setItems: () => {},
 };
 
-export const CounterContext = createContext<CounterContextType>({
-  items: [],
-  AddItem: () => {}
-});
+export const CounterContext = createContext<CounterContextType>(initialContext);
 
-function CounterProvider({ children }: { children: ReactNode }) {
-  const [items, setItems] = useState<string[]>([]);
+function CounterProvider({children}: ProviderProps) {
+  const [items, setItems] = useState<Item[]>([]);
 
-  function AddItem(id: string): void {
-   setItems((prevItems) => [...prevItems, id]);
+  function AddItem(ItemCard: Item){
+   const existentItem = items.find((item) => item.id === ItemCard.id)
+   if (existentItem) {
+    const newItems = items.map((item) => item.id === ItemCard.id ?
+     { ...item, quantiti: item.quantiti += 1 } : item
+    )
+    console.log(newItems)
+    setItems(newItems)
+   } else {
+    setItems((prevItems) => [...prevItems, ItemCard]);
+   }
   }
 
+  function Increment(ItemCardId: string) {
+    const incrementItems = items.map((item) => item.id === ItemCardId ?
+    { ...item, quantiti: item.quantiti += 1 } : item)
+    setItems(incrementItems)
+   }
+
+   function Decrement(ItemCardId: string) {
+    const decrementItems = items.map((item) => item.id === ItemCardId ?
+    { ...item, quantiti: item.quantiti -= 1 } : item)
+    setItems(decrementItems)
+   }
+
+   function RemoveItem(ItemCardId: string) {
+    const deleteItems = items.filter(item => item.id !== ItemCardId)
+    setItems(deleteItems)
+   }
+
   return (
-   <CounterContext.Provider value={{ items, AddItem }}>
+   <CounterContext.Provider value={{ items, AddItem, RemoveItem, Increment, Decrement, setItems }}>
     {children}
    </CounterContext.Provider>
   );

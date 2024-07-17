@@ -62,7 +62,11 @@ function Home() {
              </Tipos>
             <h2>{card.title}</h2>
             <h3>{card.explicacao}</h3>
-            <Contador Posicao={String(card.id)}/>
+            <Contador 
+             Posicao={String(card.id)}
+             Image={String(card.img)}
+             Title={card.title}
+            />
            </div>
           ))}
         </section>

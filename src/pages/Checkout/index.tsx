@@ -12,6 +12,7 @@ import cartaoImage from '../../images/Icon_cartaodecredito.svg';
 import casaLotericaImage from '../../images/Icon_caixaloterica.svg';
 import dinheiroImage from '../../images/Icon_notadedinheiro.svg';
 import { ContadorCheckout } from "../../components/ContadorCheckout";
+import { useCounter } from '../../hooks/useCounter';
 
 const productsFilterSchema = z.object({
   cep: z.string().min(8, {
@@ -44,6 +45,7 @@ type productsFilterSchema = z.infer<typeof productsFilterSchema>;
 function CheckOut() {
   const [formattedCep, setFormattedCep] = React.useState<string>('');
   const [isCepBlocked, setIsCepBlocked] = React.useState<boolean>(false);
+  const { items } = useCounter()
   const { register, handleSubmit, setValue, formState: { errors } } = useForm<productsFilterSchema>({
     resolver: zodResolver(productsFilterSchema)
   });
@@ -66,18 +68,6 @@ function CheckOut() {
     setValue('cep', cep, { shouldValidate: true, shouldDirty: true });
   };
   
-  const handleFilterProducts = (data: productsFilterSchema) => {
-    // Verifica se há erros nos campos
-    if (Object.keys(errors).length > 0) {
-      console.log('Formulário inválido. Corrija os erros antes de enviar.');
-      return;
-    }
-
-    // Se não houver erros, continua com a ação desejada
-    console.log('Dados válidos:', data);
-    // Aqui você pode prosseguir com o envio dos dados ou outra ação
-  };
-
   return (
     <>
       <Header/>
@@ -91,7 +81,7 @@ function CheckOut() {
                 <p><span>Endereço de Entrega</span><br></br> Informe o endereço onde deseja receber seu pedido</p>
               </FirstLeft>
               <SecondLeft>
-                <form onSubmit={handleSubmit(handleFilterProducts)}>
+                <form>
                   <div>
                     <input type="text" placeholder="CEP" maxLength={9} value={formattedCep} {...register('cep')} onChange={handleCepChange}/>
                     {errors.cep && <p className='errors'>{errors.cep.message}</p>}
@@ -148,52 +138,25 @@ function CheckOut() {
           <Right>
             <h2 className="titleRight">Cafés selecionados</h2>
             <RightContent>
-              <div className='ContainerCoffee'>
-                <div>
-                  <CoffeesContent>
-                    <div className="first">
-                      <img src={Coffeimage} className="ImageCoffee" alt="Imagem do Café"/>
-                    </div>
-                    <div className="second">
-                      <h3>Expresso Tradicional</h3>
-                      <ContadorCheckout />
-                    </div>
-                    <div className="third">
-                      <p>R$ 9.90</p>
-                    </div>
-                  </CoffeesContent>
-                  <hr style={{ display: "flex", width: '100%', marginTop: '1.5rem'}}/> 
-                </div>
-                <div style={{ marginTop: '1.2rem'}}>
-                  <CoffeesContent>
-                    <div className="first">
-                      <img src={Coffeimage} className="ImageCoffee" alt="Imagem do Café"/>
-                    </div>
-                    <div className="second">
-                      <h3>Expresso Tradicional</h3>
-                      <ContadorCheckout />
-                    </div>
-                    <div className="third">
-                      <p>R$ 9.90</p>
-                    </div>
-                  </CoffeesContent>
-                  <hr style={{ display: "flex", width: '100%', marginTop: '1.5rem'}}/> 
-                </div>
-                <div style={{ marginTop: '1.2rem'}}>
-                  <CoffeesContent>
-                    <div className="first">
-                      <img src={Coffeimage} className="ImageCoffee" alt="Imagem do Café"/>
-                    </div>
-                    <div className="second">
-                      <h3>Expresso Tradicional</h3>
-                      <ContadorCheckout />
-                    </div>
-                    <div className="third">
-                      <p>R$ 9.90</p>
-                    </div>
-                  </CoffeesContent>
-                  <hr style={{ display: "flex", width: '100%', marginTop: '1.5rem'}}/> 
-                </div>
+            <div className='ContainerCoffee'>
+                {items.map((item) => (
+                  <div key={item.id}>
+                    <CoffeesContent>
+                      <div className="first">
+                        <img src={Coffeimage} className="ImageCoffee" alt="Imagem do Café"/>
+                      </div>
+                      <div className="second">
+                        <h3>{item.Title}</h3>
+                        <ContadorCheckout ItemId={String(item.id)}/>
+                      </div>
+                      <div className="third">
+                        <p>R$ 9,90</p>
+                      </div>
+                    </CoffeesContent>
+                    {console.log(item)}
+                    <hr style={{ display: "flex", width: '100%', marginTop: '1.5rem'}}/> 
+                  </div>
+                ))}
               </div>
               <PrecoContainer>
                 <div>
