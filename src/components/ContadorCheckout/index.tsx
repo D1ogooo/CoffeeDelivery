@@ -23,7 +23,6 @@ export const ContadorCheckout = ({ ItemId }: TypeCounter) => {
        <img src={IconLixeiraRoxa} alt="" />
        <p>Remover</p>
       </CartStyle>
-      {/* onClick={() => RemoveItem(String(Posicao))} */}
      </Container>
      </>
   );

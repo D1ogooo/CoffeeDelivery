@@ -21,7 +21,6 @@ function CounterProvider({children}: ProviderProps) {
     const newItems = items.map((item) => item.id === ItemCard.id ?
      { ...item, quantiti: item.quantiti += 1 } : item
     )
-    console.log(newItems)
     setItems(newItems)
    } else {
     setItems((prevItems) => [...prevItems, ItemCard]);
@@ -36,7 +35,8 @@ function CounterProvider({children}: ProviderProps) {
 
    function Decrement(ItemCardId: string) {
     const decrementItems = items.map((item) => item.id === ItemCardId ?
-    { ...item, quantiti: item.quantiti -= 1 } : item)
+    { ...item, quantiti: item.quantiti -= 1 } : item )
+
     setItems(decrementItems)
    }
 
@@ -55,7 +55,7 @@ function CounterProvider({children}: ProviderProps) {
 function useCounter() {
   const context = useContext(CounterContext);
   if (!context) {
-   throw new Error('useCounter must be used within a CounterProvider');
+   throw new Error('Context inexistente.');
   }
  return context;
 }

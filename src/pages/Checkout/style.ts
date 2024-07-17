@@ -470,3 +470,18 @@ export const PrecoContainer = styled.div`
   }
  }
 `
+
+export const Inexistente = styled.div`
+ p {
+  color: var(--Base-Title, #272221);
+  font-family: "Baloo 2";
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 130%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+ }
+`

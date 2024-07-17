@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Header } from "../../components/Header";
 import { CheckoutContainer, Checkout, LeftContent, RightContent, SecondLeft, ThirdLeft, CoffeesContent, PrecoContainer } from "./style";
-import { Left, Right, FirstLeft, Component } from "./style";
+import { Left, Right, FirstLeft, Component, Inexistente } from "./style";
 import IconLocalization from '../../images/Icon_enderecolocal.svg';
 import Coffeimage from '../../database/database images/primeiro.svg';
 import sifraoImage from '../../images/Icon_sifraodedinheiroroxo.svg';
@@ -44,9 +44,9 @@ type productsFilterSchema = z.infer<typeof productsFilterSchema>;
 
 function CheckOut() {
   const [formattedCep, setFormattedCep] = React.useState<string>('');
-  const [isCepBlocked, setIsCepBlocked] = React.useState<boolean>(false);
+ 
   const { items } = useCounter()
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm<productsFilterSchema>({
+  const { register, setValue, formState: { errors } } = useForm<productsFilterSchema>({
     resolver: zodResolver(productsFilterSchema)
   });
 
@@ -57,16 +57,35 @@ function CheckOut() {
       cep = cep.replace(/(\d{5})(\d{3})/, '$1-$2');
     }
 
-    if (cep.length > 8) {
-      setIsCepBlocked(true);
-    } else {
-      setIsCepBlocked(false);
-    }
-
     setFormattedCep(cep);
 
     setValue('cep', cep, { shouldValidate: true, shouldDirty: true });
   };
+
+  function Rua (event: React.ChangeEvent<HTMLInputElement>) {
+    const rua = event.target.value
+    setValue('rua', rua, { shouldValidate: true, shouldDirty: true });
+  }
+
+  function Numero (event: React.ChangeEvent<HTMLInputElement>) {
+    const numero = event.target.value
+    setValue('numero', numero, { shouldValidate: true, shouldDirty: true });
+  }
+
+  function Complemento(event: React.ChangeEvent<HTMLInputElement>) {
+    const complemento = event.target.value
+    setValue('complemento', complemento, { shouldValidate: true, shouldDirty: true });
+  }
+
+  function Bairro (event: React.ChangeEvent<HTMLInputElement>) {
+    const bairro = event.target.value
+    setValue('bairro', bairro, { shouldValidate: true, shouldDirty: true });
+  }
+
+  function Cidade (event: React.ChangeEvent<HTMLInputElement>) {
+    const cidade = event.target.value
+    setValue('cidade', cidade, { shouldValidate: true, shouldDirty: true });
+  }
   
   return (
     <>
@@ -87,23 +106,23 @@ function CheckOut() {
                     {errors.cep && <p className='errors'>{errors.cep.message}</p>}
                   </div>
                   <div>
-                    <input type="text" placeholder="Rua" {...register('rua')}/>
+                    <input type="text" placeholder="Rua" {...register('rua')} onChange={() => Rua()}/>
                     {errors.rua && <p className='errors'>{errors.rua.message}</p>}
                   </div>
                   <div>
                     <section>
-                      <input type="text" placeholder="Número" {...register('numero')}/>
+                      <input type="text" placeholder="Número" {...register('numero')} onChange={() => Numero()}/>
                     </section>
                     <section>
-                      <input type="text" placeholder="Complemento" {...register('complemento')}/>
+                      <input type="text" placeholder="Complemento" {...register('complemento')} onChange={() => Complemento()}/>
                     </section>
                   </div>
                   <div>
                     <section>
-                      <input type="text" placeholder="Bairro" {...register('bairro')}/>
+                      <input type="text" placeholder="Bairro" {...register('bairro')} onChange={() => Bairro()}/>
                     </section>
                     <section>
-                      <input type="text" placeholder="Cidade" {...register('cidade')}/>
+                      <input type="text" placeholder="Cidade" {...register('cidade')} onChange={() => Cidade()}/>
                     </section>
                     <section>
                       <input type="text" placeholder="UF" maxLength={2} {...register('uf')}/>
@@ -139,7 +158,7 @@ function CheckOut() {
             <h2 className="titleRight">Cafés selecionados</h2>
             <RightContent>
             <div className='ContainerCoffee'>
-                {items.map((item) => (
+                {items?.map((item) => (
                   <div key={item.id}>
                     <CoffeesContent>
                       <div className="first">
@@ -153,10 +172,13 @@ function CheckOut() {
                         <p>R$ 9,90</p>
                       </div>
                     </CoffeesContent>
-                    {console.log(item)}
                     <hr style={{ display: "flex", width: '100%', marginTop: '1.5rem'}}/> 
                   </div>
                 ))}
+               {items.length == 0 && 
+               <Inexistente>
+                <p>Sem cafés selecionados...</p>
+               </Inexistente>}
               </div>
               <PrecoContainer>
                 <div>
