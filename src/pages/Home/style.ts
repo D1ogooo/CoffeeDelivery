@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled , {css}from "styled-components";
 
 export const Main = styled.section`
  width: 100%;
@@ -170,46 +170,56 @@ export const Coffees = styled.div`
     display: flex;
     justify-items: flex-start;
     flex-wrap: wrap;
-    
-    h2 {
-     color: ${({theme}) => theme.cores.base_subtitle};
-     text-align: center;
-     font-family: "Baloo 2";
-     font-size: 1.25rem;
-     font-style: normal;
-     font-weight: 700;
-     line-height: 130%;
-     margin-bottom: 0.5rem;
-    }
 
-    h3 {
-      color: ${({theme}) => theme.cores.base_label};
-      text-align: center;
-      font-family: 'Roboto';
-      font-size: 0.875rem;
-      font-style: normal;
-      font-weight: 400;
-      line-height: 130%;
-      padding-left: 1.25rem;
-      padding-right: 1.25rem;
-      margin-bottom: 2.06rem;
-    }
+    .card {
+      border-radius: 0.375rem 2.25rem;
+      background: ${({ theme }) => theme.cores.base_card};
+      width: 16rem;
+      height: 19.375rem;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
 
-   .card {
-    border-radius: 0.375rem 2.25rem;
-    background: ${({ theme }) => theme.cores.base_card};
-    width: 16rem;
-    height: 19.375rem;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    .coffee_image {
-     margin-top: -1.5625rem;
-     margin-bottom: 0.75rem;
+      .coffee_image {
+        margin-top: -1.5625rem;
+        margin-bottom: 0.75rem;
+
+        /* Estilos específicos para a posição 5 */
+        ${({ Posicao }) =>
+          Posicao === '5' &&
+          css`
+            width: 10rem; /* Tamanho desejado */
+            height: auto; /* Ou altura desejada */
+          `}
+      }
+
+      h2 {
+        color: ${({ theme }) => theme.cores.base_subtitle};
+        text-align: center;
+        font-family: "Baloo 2";
+        font-size: 1.25rem;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 130%;
+        margin-bottom: 0.5rem;
+      }
+
+      h3 {
+        color: ${({ theme }) => theme.cores.base_label};
+        text-align: center;
+        font-family: 'Roboto';
+        font-size: 0.875rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 130%;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+        margin-bottom: 2.06rem;
+      }
     }
-   }
   }
 `;
+
 
 export const Tipos = styled.section`
   display: flex;
