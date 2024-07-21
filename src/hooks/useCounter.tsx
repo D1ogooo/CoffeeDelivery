@@ -1,5 +1,5 @@
-import { useState, useContext, createContext } from "react";
-import type { CounterContextType, Item, ProviderProps } from "../@type/Tipagens";
+import { useState, useContext, createContext } from 'react';
+import type { CounterContextType, Item, ProviderProps } from '../@type/Tipagens';
 
 const initialContext: CounterContextType = {
   items: [],
@@ -12,52 +12,56 @@ const initialContext: CounterContextType = {
 
 export const CounterContext = createContext<CounterContextType>(initialContext);
 
-function CounterProvider({children}: ProviderProps) {
+function CounterProvider({ children }: ProviderProps) {
   const [items, setItems] = useState<Item[]>([]);
 
-  function AddItem(ItemCard: Item){
-   const existentItem = items.find((item) => item.id === ItemCard.id)
-   if (existentItem) {
-    const newItems = items.map((item) => item.id === ItemCard.id ?
-     { ...item, quantiti: item.quantiti += 1 } : item
-    )
-    setItems(newItems)
-   } else {
-    setItems((prevItems) => [...prevItems, ItemCard]);
-   }
+  function AddItem(ItemCard: Item) {
+    const existentItem = items.find((item) => item.id === ItemCard.id);
+    if (existentItem) {
+      const newItems = items.map((item) =>
+        item.id === ItemCard.id ? { ...item, quantiti: item.quantiti + 1 } : item
+      );
+      setItems(newItems);
+    } else {
+      setItems((prevItems) => [...prevItems, ItemCard]);
+    }
   }
 
   function Increment(ItemCardId: string) {
-    const incrementItems = items.map((item) => item.id === ItemCardId ?
-    { ...item, quantiti: item.quantiti += 1 } : item)
-    setItems(incrementItems)
-   }
+    const incrementItems = items.map((item) =>
+      item.id === ItemCardId ? { ...item, quantiti: item.quantiti + 1 } : item
+    );
+    setItems(incrementItems);
+  }
 
-   function Decrement(ItemCardId: string) {
-    const decrementItems = items.map((item) => item.id === ItemCardId ?
-    { ...item, quantiti: item.quantiti -= 1 } : item )
+  function Decrement(ItemCardId: string) {
+    const decrementItems = items.map((item) => {
+      if (item.id === ItemCardId && item.quantiti > 0) {
+        return { ...item, quantiti: item.quantiti - 1 };
+      }
+      return item;
+    });
+    setItems(decrementItems);
+  }
 
-    setItems(decrementItems)
-   }
-
-   function RemoveItem(ItemCardId: string) {
-    const deleteItems = items.filter(item => item.id !== ItemCardId)
-    setItems(deleteItems)
-   }
+  function RemoveItem(ItemCardId: string) {
+    const deleteItems = items.filter((item) => item.id !== ItemCardId);
+    setItems(deleteItems);
+  }
 
   return (
-   <CounterContext.Provider value={{ items, AddItem, RemoveItem, Increment, Decrement, setItems }}>
-    {children}
-   </CounterContext.Provider>
+    <CounterContext.Provider value={{ items, AddItem, RemoveItem, Increment, Decrement, setItems }}>
+      {children}
+    </CounterContext.Provider>
   );
 }
 
 function useCounter() {
   const context = useContext(CounterContext);
   if (!context) {
-   throw new Error('Context inexistente.');
+    throw new Error('Contexto inexistente.');
   }
- return context;
+  return context;
 }
 
-export { useCounter, CounterProvider}
+export { useCounter, CounterProvider };

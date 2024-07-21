@@ -102,27 +102,32 @@ export const LeftContent = styled.div`
  background: var(--Base-Card, #F3F2F2);
 `
 
+export const Error = styled.section`
+ width: 300px;
+ margin: 0 auto;
+`
+
 export const SecondLeft = styled.div`
  .errors {
-  color: red;
-  font-family: "Baloo 2";
-  font-size: .9rem;
-  /* margin-bottom: ;
-  margin-top: ;
-  display: flex; */
-  /* width: 100%;
-  height: auto; */
- }
+    color: red;
+    font-family: "Baloo 2";
+    font-size: 0.9rem;
+    margin-top: 0.25rem; /* Ajuste o espaçamento conforme necessário */
+  }
 
  form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  div:nth-child(1) {
+  margin-bottom: 3px;
+  }
  }
  div:nth-child(1) {
   width: 12.5rem;
   height: 2.625rem;
   display: flex;
+  flex-direction: column;
   padding: 0.75rem;
   align-items: center;
   gap: 0.25rem;
@@ -148,8 +153,9 @@ export const SecondLeft = styled.div`
   width: 100%;
   height: 2.625rem;
   display: flex;
+  flex-direction: column;
   padding: 0.75rem;
-  align-items: center;
+  align-items: start;
   gap: 0.25rem;
   align-self: stretch;
 
@@ -173,9 +179,12 @@ export const SecondLeft = styled.div`
  div:nth-child(3) {
   display: flex;
   gap: 0.75rem;
+
   section:nth-child(1) {
    display: flex;
+   flex-direction: column;
    width: 12.5rem;
+   height: 2.625rem;
    padding: 0.75rem;
    align-items: center;
    gap: 0.25rem;
@@ -185,7 +194,6 @@ export const SecondLeft = styled.div`
    input {
     flex: 1 0 0;
     width: 100%;
-    height: auto;
     color: var(--Base-Label, #8D8686);
     font-family: 'Roboto';
     font-size: 0.875rem;
@@ -199,6 +207,7 @@ export const SecondLeft = styled.div`
   section:nth-child(2) {
    display: flex;
    width: 12.5rem;
+   height: 2.625rem;
    padding: 0.75rem;
    align-items: center;
    gap: 0.25rem;
@@ -226,18 +235,20 @@ export const SecondLeft = styled.div`
 
   section:nth-child(1) {
    display: flex;
+   flex-direction: column;
    width: 12.5rem;
+   height: 2.625rem;
    padding: 0.75rem;
    align-items: center;
    gap: 0.25rem;
    border-radius: 0.25rem;
-   border: .0625rem solid var(--Base-Button, #E6E5E5);
+   border: 1px solid var(--Base-Button, #E6E5E5);
    background: var(--Base-Input, #EDEDED);
    input {
-    display: flex;
     flex: 1 0 0;
+    width: 100%;
     color: var(--Base-Label, #8D8686);
-    font-family: Roboto;
+    font-family: 'Roboto';
     font-size: 0.875rem;
     font-style: normal;
     font-weight: 400;
@@ -245,25 +256,24 @@ export const SecondLeft = styled.div`
     background: none;
     border: none;
    }
-  }
+  } 
 
   section:nth-child(2) {
    display: flex;
-   width: 100%;
+   flex-direction: column;
+   width: 12.5rem;
+   height: 2.625rem;
    padding: 0.75rem;
    align-items: center;
    gap: 0.25rem;
-   flex: 1 0 0;
-
-
    border-radius: 0.25rem;
-   border: .0625rem solid var(--Base-Button, #E6E5E5);
+   border: 1px solid var(--Base-Button, #E6E5E5);
    background: var(--Base-Input, #EDEDED);
    input {
-    display: flex;
     flex: 1 0 0;
+    width: 100%;
     color: var(--Base-Label, #8D8686);
-    font-family: Roboto;
+    font-family: 'Roboto';
     font-size: 0.875rem;
     font-style: normal;
     font-weight: 400;
@@ -271,23 +281,23 @@ export const SecondLeft = styled.div`
     background: none;
     border: none;
    }
-  }
+  } 
 
   section:nth-child(3) {
    display: flex;
-   width: 3.75rem;
+   /* width: 3.5rem; */
+   height: 2.625rem;
    padding: 0.75rem;
    align-items: center;
    gap: 0.25rem;
-
    border-radius: 0.25rem;
-   border: .0625rem solid var(--Base-Button, #E6E5E5);
+   border: 1px solid var(--Base-Button, #E6E5E5);
    background: var(--Base-Input, #EDEDED);
    input {
-    display: flex;
     flex: 1 0 0;
+    width: 3.5rem;
     color: var(--Base-Label, #8D8686);
-    font-family: Roboto;
+    font-family: 'Roboto';
     font-size: 0.875rem;
     font-style: normal;
     font-weight: 400;
@@ -295,7 +305,7 @@ export const SecondLeft = styled.div`
     background: none;
     border: none;
    }
-  }
+  } 
  }
 `
 
@@ -373,6 +383,8 @@ export const Component = styled.div`
  gap: 0.75rem;
  
  button {
+  background: ${({ disabled }) => (disabled ? '#FF6347' : 'var(--Base-Button, #E6E5E5)')}; /* Vermelho se desabilitado */
+
   cursor: pointer;
   display: flex;
   padding: 1rem;
@@ -399,6 +411,32 @@ export const Component = styled.div`
   background: var(--Brand-Purple-Light, #EBE5F9);
  }
 `
+
+export const Button = styled.button`
+  cursor: pointer;
+  display: flex;
+  padding: 1rem;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1 0 0;
+  border-radius: 0.375rem;
+  border: none;
+  width: 11.16rem;
+  height: auto;
+  color: var(--Base-Text, #574F4D);
+  font-family: 'Roboto';
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 160%;
+  text-transform: uppercase;
+  background: ${({ disabled }) => (disabled ? 'blue' : 'var(--Brand-Yellow, #E6E5E5)')};
+  :active {
+    border-radius: 0.375rem;
+    border: 1px solid var(--Brand-Purple, #8047F8);
+    background: var(--Brand-Purple-Light, #EBE5F9);
+  }
+`;
 
 export const PrecoContainer = styled.div`
  width: 100%;
@@ -482,6 +520,5 @@ export const Inexistente = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
  }
 `

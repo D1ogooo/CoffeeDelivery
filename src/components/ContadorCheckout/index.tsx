@@ -4,11 +4,7 @@ import AdicionarIcon from '../../images/IncrementIcon.svg';
 import DecrementarIcon from '../../images/DecrementIcon.svg';
 import IconLixeiraRoxa from '../../images/IconLixeiraRoxa.svg'
 
-interface TypeCounter {
-  ItemId: string;
-}
-
-export const ContadorCheckout = ({ ItemId }: TypeCounter) => {
+export const ContadorCheckout = ({ ItemId }: { ItemId: string }) => {
   const { items, RemoveItem, Increment, Decrement } = useCounter()
 
   return (

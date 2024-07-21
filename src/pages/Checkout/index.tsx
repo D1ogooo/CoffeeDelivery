@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Header } from "../../components/Header";
-import { CheckoutContainer, Checkout, LeftContent, RightContent, SecondLeft, ThirdLeft, CoffeesContent, PrecoContainer } from "./style";
-import { Left, Right, FirstLeft, Component, Inexistente } from "./style";
+import { CheckoutContainer, Checkout, LeftContent, RightContent, SecondLeft, ThirdLeft, CoffeesContent, PrecoContainer, Button } from "./style";
+import { Left, Right, FirstLeft, Component, Inexistente, Error } from "./style";
 import IconLocalization from '../../images/Icon_enderecolocal.svg';
 import Coffeimage from '../../database/database images/primeiro.svg';
 import sifraoImage from '../../images/Icon_sifraodedinheiroroxo.svg';
@@ -43,9 +44,10 @@ const productsFilterSchema = z.object({
 type productsFilterSchema = z.infer<typeof productsFilterSchema>;
 
 function CheckOut() {
-  const [formattedCep, setFormattedCep] = React.useState<string>('');
- 
-  const { items } = useCounter()
+  const [formattedCep, setFormattedCep] = useState<string>('');
+  const [isInvalid, setisInvalid] = useState<boolean>(true);
+  const navigate = useNavigate();
+  const { items } = useCounter();
   const { register, setValue, formState: { errors } } = useForm<productsFilterSchema>({
     resolver: zodResolver(productsFilterSchema)
   });
@@ -56,35 +58,55 @@ function CheckOut() {
     if (cep.length === 8) {
       cep = cep.replace(/(\d{5})(\d{3})/, '$1-$2');
     }
-
     setFormattedCep(cep);
-
     setValue('cep', cep, { shouldValidate: true, shouldDirty: true });
   };
 
-  function Rua (event: React.ChangeEvent<HTMLInputElement>) {
-    const rua = event.target.value
+  function Rua(event: React.ChangeEvent<HTMLInputElement>) {
+    const rua = event.target.value;
     setValue('rua', rua, { shouldValidate: true, shouldDirty: true });
+
   }
 
-  function Numero (event: React.ChangeEvent<HTMLInputElement>) {
-    const numero = event.target.value
-    setValue('numero', numero, { shouldValidate: true, shouldDirty: true });
+  function Numero(event: React.ChangeEvent<HTMLInputElement>) {
+    const rawValue = event.target.value;
+    const cleanedValue = rawValue.replace(/\D/g, '');
+  
+    if (cleanedValue === '') {
+      setValue('numero', 0, { shouldValidate: true, shouldDirty: true });
+    } else {
+      const numero = parseInt(cleanedValue, 10);
+      setValue('numero', numero, { shouldValidate: true, shouldDirty: true });
+    }
   }
 
   function Complemento(event: React.ChangeEvent<HTMLInputElement>) {
-    const complemento = event.target.value
+    const complemento = event.target.value;
     setValue('complemento', complemento, { shouldValidate: true, shouldDirty: true });
   }
 
-  function Bairro (event: React.ChangeEvent<HTMLInputElement>) {
-    const bairro = event.target.value
+  function Bairro(event: React.ChangeEvent<HTMLInputElement>) {
+    const bairro = event.target.value;
     setValue('bairro', bairro, { shouldValidate: true, shouldDirty: true });
   }
 
-  function Cidade (event: React.ChangeEvent<HTMLInputElement>) {
-    const cidade = event.target.value
+  function Cidade(event: React.ChangeEvent<HTMLInputElement>) {
+    const cidade = event.target.value;
     setValue('cidade', cidade, { shouldValidate: true, shouldDirty: true });
+  }
+
+  function UF(event: React.ChangeEvent<HTMLInputElement>) {
+    const uf = event.target.value;
+    setValue('uf', uf, { shouldValidate: true, shouldDirty: true });
+  }
+
+
+  function verifyCart() {
+    if (items.length > 0) {
+      return navigate('/pedidoFinalizado');
+    } else {
+      setisInvalid(true)
+    }
   }
   
   return (
@@ -103,7 +125,9 @@ function CheckOut() {
                 <form>
                   <div>
                     <input type="text" placeholder="CEP" maxLength={9} value={formattedCep} {...register('cep')} onChange={handleCepChange}/>
-                    {errors.cep && <p className='errors'>{errors.cep.message}</p>}
+                    <Error>
+                      {errors.cep && <p className='errors'>{errors.cep.message}</p>}
+                    </Error>
                   </div>
                   <div>
                     <input type="text" placeholder="Rua" {...register('rua')} onChange={Rua}/>
@@ -129,7 +153,7 @@ function CheckOut() {
                       {errors.cidade && <p className='errors'>{errors.cidade.message}</p>}
                     </section>
                     <section>
-                      <input type="text" placeholder="UF" maxLength={2} {...register('uf')}/>
+                      <input type="text" placeholder="UF" maxLength={2} {...register('uf')} onChange={UF}/>
                       {errors.uf && <p className='errors'>{errors.uf.message}</p>}
                     </section>
                   </div>
@@ -161,7 +185,7 @@ function CheckOut() {
           <Right>
             <h2 className="titleRight">Cafés selecionados</h2>
             <RightContent>
-            <div className='ContainerCoffee'>
+              <div className='ContainerCoffee'>
                 {items?.map((item) => (
                   <div key={item.id}>
                     <CoffeesContent>
@@ -170,7 +194,7 @@ function CheckOut() {
                       </div>
                       <div className="second">
                         <h3>{item.Title}</h3>
-                        <ContadorCheckout ItemId={String(item.id)}/>
+                        <ContadorCheckout ItemId={item.id} />
                       </div>
                       <div className="third">
                         <p>R$ 9,90</p>
@@ -179,27 +203,28 @@ function CheckOut() {
                     <hr style={{ display: "flex", width: '100%', marginTop: '1.5rem'}}/> 
                   </div>
                 ))}
-               {items.length == 0 && 
-               <Inexistente>
-                <p>Sem cafés selecionados...</p>
-               </Inexistente>}
+                {items.length === 0 && 
+                  <Inexistente>
+                    <p>Sem cafés selecionados...</p>
+                  </Inexistente>
+                }
               </div>
               <PrecoContainer>
-               <div>
-                <p>Total de itens</p>
-                <p>R$ {items.reduce((total, item) => total + (item.quantiti * 9.9), 0).toFixed(2)}</p>
-               </div>
-               <div>
-                <p>Entrega</p>
-                <p>R$ 3.50</p>
-               </div>
-               <div>
-                <p>Total</p>
-                <p>R$ {(items.reduce((total, item) => total + (item.quantiti * 9.9), 0) + 3.5).toFixed(2)}</p>
-               </div>
-               <button type="submit" className="confirmarPedido" >
-                Confirmar Pedido
-               </button>
+                <div>
+                  <p>Total de itens</p>
+                  <p>R$ {items.reduce((total, item) => total + (item.quantiti * 9.9), 0).toFixed(2)}</p>
+                </div>
+                <div>
+                  <p>Entrega</p>
+                  <p>R$ 3.50</p>
+                </div>
+                <div>
+                  <p>Total</p>
+                  <p>R$ {(items.reduce((total, item) => total + (item.quantiti * 9.9), 0) + 3.5).toFixed(2)}</p>
+                </div>
+                <Button className="confirmarPedido" onClick={verifyCart}> 
+                  Confirmar Pedido
+                </Button>
               </PrecoContainer>
             </RightContent>
           </Right>

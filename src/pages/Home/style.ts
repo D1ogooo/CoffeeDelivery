@@ -184,15 +184,6 @@ export const Coffees = styled.div`
         margin-top: -1.5625rem;
         margin-bottom: 0.75rem;
 
-        /* Estilos específicos para a posição 5 */
-        ${({ Posicao }) =>
-          Posicao === '5' &&
-          css`
-            width: 10rem; /* Tamanho desejado */
-            height: auto; /* Ou altura desejada */
-          `}
-      }
-
       h2 {
         color: ${({ theme }) => theme.cores.base_subtitle};
         text-align: center;
