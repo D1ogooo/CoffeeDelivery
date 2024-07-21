@@ -45,7 +45,7 @@ type productsFilterSchema = z.infer<typeof productsFilterSchema>;
 
 function CheckOut() {
   const [formattedCep, setFormattedCep] = useState<string>('');
-  const [isInvalid, setisInvalid] = useState<boolean>(true);
+
   const navigate = useNavigate();
   const { items } = useCounter();
   const { register, setValue, formState: { errors } } = useForm<productsFilterSchema>({
@@ -104,8 +104,6 @@ function CheckOut() {
   function verifyCart() {
     if (items.length > 0) {
       return navigate('/pedidoFinalizado');
-    } else {
-      setisInvalid(true)
     }
   }
   

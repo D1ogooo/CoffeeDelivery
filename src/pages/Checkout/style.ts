@@ -383,8 +383,6 @@ export const Component = styled.div`
  gap: 0.75rem;
  
  button {
-  background: ${({ disabled }) => (disabled ? '#FF6347' : 'var(--Base-Button, #E6E5E5)')}; /* Vermelho se desabilitado */
-
   cursor: pointer;
   display: flex;
   padding: 1rem;
