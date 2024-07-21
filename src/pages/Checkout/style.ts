@@ -428,7 +428,6 @@ export const Button = styled.button`
   font-weight: 400;
   line-height: 160%;
   text-transform: uppercase;
-  background: ${({ disabled }) => (disabled ? 'blue' : 'var(--Brand-Yellow, #E6E5E5)')};
   :active {
     border-radius: 0.375rem;
     border: 1px solid var(--Brand-Purple, #8047F8);
