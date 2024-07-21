@@ -45,7 +45,6 @@ type productsFilterSchema = z.infer<typeof productsFilterSchema>;
 
 function CheckOut() {
   const [formattedCep, setFormattedCep] = useState<string>('');
-
   const navigate = useNavigate();
   const { items } = useCounter();
   const { register, setValue, formState: { errors } } = useForm<productsFilterSchema>({
