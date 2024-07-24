@@ -14,6 +14,7 @@ export type CounterContextType = {
   Increment: (ItemCardId: string) => void;
   Decrement: (ItemCardId: string) => void;
   setItems: React.Dispatch<React.SetStateAction<Item[]>>;
+  handleForm: (data: string) => void;
 };
 
 export type ProviderProps = {

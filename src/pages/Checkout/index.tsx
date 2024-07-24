@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { Header } from "../../components/Header";
-import { Form, CheckoutContainer, Left, Right, LeftContent, MetodoPagamento, PagamentoContent, RightContent, Card, Internal, IternalCard } from './style'
+import { Form, CheckoutContainer, Left, Right, LeftContent, MetodoPagamento, PagamentoContent, RightContent, Card, Internal, IternalCard, Error } from './style'
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -8,10 +9,9 @@ import MoneiIcon from '../../images/Icon_sifraodedinheiroroxo.svg'
 import notadeDinheiroIcon from '../../images/Icon_notadedinheiro.svg'
 import casaLotericaIcon from '../../images/Icon_caixaloterica.svg'
 import creditoIcon from '../../images/Icon_cartaodecredito.svg'
-import { useState } from "react";
-import IconCoffee from '../../database/database images/oitavo.svg'
 import { ContadorCheckout } from "../../components/ContadorCheckout";
 import { useCounter } from "../../hooks/useCounter";
+import IconCoffee from '../../database/database images/oitavo.svg'
 
 const productsFilterSchema = z.object({
   cep: z.string().min(8, {
@@ -36,7 +36,10 @@ const productsFilterSchema = z.object({
     message: "O UF deve conter exatamente 2 caracteres."
   }).max(2, {
     message: "O UF deve conter exatamente 2 caracteres."
-  })
+  }),
+  cartaoCredito: z.boolean().optional(),
+  cartaoDebito: z.boolean().optional(),
+  dinheiro: z.boolean().optional(),
 });
 
 type productsFilterSchema = z.infer<typeof productsFilterSchema>;
@@ -45,20 +48,42 @@ function CheckOut() {
   const [isOn, setIsOn] = useState<boolean>(false)
   const [secondisOn, setsecondisOn] = useState<boolean>(false)
   const [thirdIsOn, setThirdIsOn] = useState<boolean>(false)
-  const { items } = useCounter()
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>(null);
+  const { items, handleForm } = useCounter()
   const { register, handleSubmit, formState: { errors } } = useForm<productsFilterSchema>({
    resolver: zodResolver(productsFilterSchema)
   });
-  
-  function handleForm (data: any) {
-   console.log(data)
-  } 
+
+  const handlePaymentMethodSelection = (method: string) => {
+    setSelectedPaymentMethod(method);
+    if (method === "cartaoCredito") {
+      setIsOn(true);
+      setsecondisOn(false);
+      setThirdIsOn(false);
+    } else if (method === "cartaoDebito") {
+      setIsOn(false);
+      setsecondisOn(true);
+      setThirdIsOn(false);
+    } else if (method === "dinheiro") {
+      setIsOn(false);
+      setsecondisOn(false);
+      setThirdIsOn(true);
+    }
+  };
+
+  const onSubmit = (data: any) => {
+    if (!selectedPaymentMethod) {
+      alert("Por favor, selecione um método de pagamento.");
+      return;
+    }
+    handleForm(data);
+  };
 
   return (
    <>
     <Header/>
     <CheckoutContainer>
-     <Form onSubmit={handleSubmit(handleForm)}>
+     <Form onSubmit={handleSubmit(onSubmit)}>
       <Left>
        <h2 id="TitleLeft">Complete seu pedido</h2>
        <LeftContent>
@@ -70,30 +95,48 @@ function CheckOut() {
          </section>
         </div>
         <label className="firstLabel">
-         <input type="text" placeholder="CEP"/>
+         <input type="text" placeholder="CEP" {...register('cep')}/>
         </label>
+         {errors.cep && 
+         <Error>
+          <p>{errors.cep.message}</p>
+         </Error>}
         <label className="secondLabel">
-         <input type="text" placeholder="Rua"/>
+         <input type="text" placeholder="Rua" {...register('rua')}/>
         </label>
+        {errors.rua && 
+         <Error>
+          <p>{errors.rua.message}</p>
+         </Error>}
         <div style={{ display: 'flex', gap: '0.75rem' }}>
+         <div style={{ display: 'flex', flexDirection: 'column'}}>
          <label className="thirdLabel">
-          <input type="text" placeholder="Número"/>
+          <input type="text" placeholder="Número" {...register('numero')}/>
          </label>
+          <p className='Error'>{errors.numero && errors.numero.message}</p>
+         </div>
          <label className="forLabel">
-          <input type="text" placeholder="Complemento"/>
+          <input type="text" placeholder="Complemento" {...register('complemento')}/>
           <p>Opcional</p>
          </label>
         </div>
         <div style={{ display: 'flex', gap: '0.75rem' }}>
+         <div>
          <label className="fiveLabel">
-          <input type="text" placeholder="Bairro"/>
+          <input type="text" placeholder="Bairro" {...register('bairro')}/>
+          <p className='Error2'>{errors.bairro && errors.bairro.message}</p>
          </label>
+         </div>
          <label className="sixLabel">
-          <input type="text" placeholder="Cidade"/>
+          <input type="text" placeholder="Cidade" {...register('cidade')}/>
+          <p className='Error'>{errors.cidade && errors.cidade.message}</p>
          </label>
-         <label className="sevenLabel">
-          <input type="text" placeholder="UF"/>
+        <div style={{ display: 'flex', marginLeft: '.125rem'}}>
+        <label className="sevenLabel">
+         <input type="text" placeholder="UF" maxLength={2} {...register('uf')}/>
          </label>
+        </div>
+         <p className='Error'>{errors.uf && errors.uf.message}</p>
         </div>
        </LeftContent>
        <MetodoPagamento>
@@ -106,17 +149,29 @@ function CheckOut() {
           </div>
          </div>
          <section className="buttonsContent">
-          <button onClick={() => setIsOn(!isOn)} className={isOn ? 'styleButtonSelected' : ''}>
-           <img src={creditoIcon} alt="" />
-           Cartão de crédito
+          <button 
+            type="button" 
+            onClick={() => handlePaymentMethodSelection("cartaoCredito")} 
+            className={isOn ? 'styleButtonSelected' : ''}
+          >
+            <img src={creditoIcon} alt="" />
+            Cartão de crédito
           </button>
-          <button onClick={() => setsecondisOn(!secondisOn)} className={secondisOn ? 'styleButtonSelected' : ''}>
-           <img src={casaLotericaIcon} alt="" />
-           cartão de débito
+          <button 
+            type="button" 
+            onClick={() => handlePaymentMethodSelection("cartaoDebito")} 
+            className={secondisOn ? 'styleButtonSelected' : ''}
+          >
+            <img src={casaLotericaIcon} alt="" />
+            cartão de débito
           </button>
-          <button onClick={() => setThirdIsOn(!thirdIsOn)} className={thirdIsOn ? 'styleButtonSelected' : ''}>
-          <img src={notadeDinheiroIcon} alt="" />
-           dinheiro
+          <button 
+            type="button" 
+            onClick={() => handlePaymentMethodSelection("dinheiro")} 
+            className={thirdIsOn ? 'styleButtonSelected' : ''}
+          >
+            <img src={notadeDinheiroIcon} alt="" />
+            dinheiro
           </button>
          </section>
         </PagamentoContent>
@@ -137,8 +192,8 @@ function CheckOut() {
           </div>
            <ContadorCheckout ItemId={card.id}/>
           </div>
-         </Card>))}
-          {console.log(items)}
+         </Card>
+        ))}
         </div>
         <hr style={{ marginTop: '1rem', 
          marginBottom: '1rem', strokeWidth: '.0625rem', border: 'none',
@@ -157,9 +212,7 @@ function CheckOut() {
            <h3>Total</h3>
            <h3>R$ 33,20</h3>
           </section>
-          <button type='submit' id='ConfirmarPedido'>
-           confirmar pedido
-          </button>
+          <input type='submit' id='ConfirmarPedido' value="confirmar pedido"/>
          </IternalCard>
         </Internal>
        </RightContent>

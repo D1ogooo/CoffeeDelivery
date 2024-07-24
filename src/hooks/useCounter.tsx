@@ -8,6 +8,7 @@ const initialContext: CounterContextType = {
   Increment: () => {},
   Decrement: () => {},
   setItems: () => {},
+  handleForm: () => {},
 };
 
 export const CounterContext = createContext<CounterContextType>(initialContext);
@@ -45,12 +46,16 @@ function CounterProvider({ children }: ProviderProps) {
   }
 
   function RemoveItem(ItemCardId: string) {
-    const deleteItems = items.filter((item) => item.id !== ItemCardId);
-    setItems(deleteItems);
+   const deleteItems = items.filter((item) => item.id !== ItemCardId);
+   setItems(deleteItems);
+  }
+ 
+  function handleForm(data: any) {
+   console.log(data)
   }
 
   return (
-    <CounterContext.Provider value={{ items, AddItem, RemoveItem, Increment, Decrement, setItems }}>
+    <CounterContext.Provider value={{ items, AddItem, RemoveItem, Increment, Decrement, setItems, handleForm }}>
       {children}
     </CounterContext.Provider>
   );

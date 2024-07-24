@@ -6,7 +6,6 @@ export const CheckoutContainer = styled(Container)``
 export const Form = styled.form`
  width: 100%;
  margin: 0 auto;
-
  display: flex;
  justify-content: center;
  gap: 2rem;
@@ -16,7 +15,7 @@ export const Left = styled.section`
  width: 50%;
  height: auto;
  #TitleLeft {
-  width: 10.625rem;
+  width: 12.625rem;
   height: 1.4375rem;
   margin-bottom: 0.94rem;
   color: ${({ theme }) => theme.cores.subtitle};
@@ -37,6 +36,28 @@ export const LeftContent = styled.div`
  align-self: stretch;
  border-radius: 0.375rem;
  background: ${({ theme }) => theme.cores.base_card};
+
+ .Error {
+  margin-left: -45px;
+  color: red;
+  text-align: right;
+  font-family: "Baloo 2";
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%;
+ }
+
+ .Error2 {
+  margin-left: -3.4375rem;
+  color: red;
+  text-align: right;
+  font-family: "Baloo 2";
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%;
+ }
 
  .firstDiv {
   display: flex;
@@ -76,6 +97,7 @@ export const LeftContent = styled.div`
 
  .firstLabel {
   display: flex;
+  flex-direction: column;
   width: 12.5rem;
   padding: 0.75rem;
   align-items: center;
@@ -195,6 +217,7 @@ export const LeftContent = styled.div`
   width: 17.5rem;
   padding: 0.75rem;
   align-items: center;
+  justify-content: space-between;
   gap: 0.25rem;
   border: .0625rem solid ${({ theme }) => theme.cores.base_button};
   background: ${({ theme }) => theme.cores.base_input};
@@ -212,6 +235,7 @@ export const LeftContent = styled.div`
   border: .0625rem solid ${({ theme }) => theme.cores.base_button};
   background: ${({ theme }) => theme.cores.base_input};
   input {
+   display: flex;
    width: 3.75rem;
    background: none;
    border: none;
@@ -248,6 +272,9 @@ export const RightContent = styled.section`
 `
 
 export const IternalCard = styled.div`
+ display: flex;
+ flex-direction: column;
+ gap: 0.75rem;
  #ConfirmarPedido {
   width: 100%;
   height: auto;
@@ -258,7 +285,7 @@ export const IternalCard = styled.div`
   align-items: center;
   gap: 0.25rem;
   align-self: stretch;
-  margin-top: 1.5rem;
+  margin-top: .3rem;
   border-radius: 0.375rem;
   background: ${({ theme }) => theme.cores.yellow};
   border: none;
@@ -440,4 +467,15 @@ export const PagamentoContent = styled.div`
    background: ${({ theme }) => theme.cores.purple_light};
   }
  }
+`
+
+export const Error = styled.div`
+ color: red;
+ text-align: right;
+ font-family: "Baloo 2";
+ font-size: 1rem;
+ font-style: normal;
+ font-weight: 400;
+ line-height: 130%;
+ margin-top: -10px;
 `
