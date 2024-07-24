@@ -4,6 +4,7 @@ export type Item = {
   id: string;
   quantiti: number;
   Title: string;
+  Image: string;
 }
 
 export type CounterContextType = {

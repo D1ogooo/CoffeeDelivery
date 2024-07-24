@@ -30,5 +30,5 @@ export const GlobalStyle = createGlobalStyle`
 
 export const Container = styled.div`
  margin: 0 auto;
- width: 90%;
+ width: 80%;
 `

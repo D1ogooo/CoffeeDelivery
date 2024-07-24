@@ -13,7 +13,7 @@ function Home() {
   return (
    <>
     <Header/>
-    <Container>
+    <Container style={{ marginBottom: '2rem'}}>
       <Main>
         <div className="left">
           <h1>Encontre o café perfeito para qualquer hora do dia</h1>

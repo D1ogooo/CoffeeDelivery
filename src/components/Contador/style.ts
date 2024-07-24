@@ -31,14 +31,19 @@ export const CartStyle = styled.button`
  width: 2.375rem;
  height: 2.375rem;
  border-radius: 0.375rem;
- background: var(--Brand-Purple-Dark, #4B2995);
+ background: ${({ theme }) => theme.cores.purple_dark};
  border: none;
  cursor: pointer;
  
-  img {
-   width: 1.375rem;
-   height: 1.375rem;
-  }
+ &:hover {
+  background: ${({ theme }) => theme.cores.purple};
+  transition: 0.3s all;
+ }
+
+ img {
+  width: 1.375rem;
+  height: 1.375rem;
+ }
 `;
 
 export const Container = styled.div`

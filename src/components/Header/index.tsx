@@ -18,7 +18,7 @@ export const Header = () => {
       <section>
        <div>
         <img src={IconLocal} alt="" />
-        <p>Porto Alegre, RS</p>
+        <p>Cariacica, ES</p>
        </div>
        <DivCart to='/checkout'>
         <img src={YellowCart} alt="" />

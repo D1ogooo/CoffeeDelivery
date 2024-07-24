@@ -31,10 +31,10 @@ export const CartStyle = styled.button`
  gap: 0.25rem;
  border-radius: 0.375rem;
  border: none;
- background: var(--Base-Button, #E6E5E5);
+ background: ${({ theme }) => theme.cores.base_button};
  
  p {
-  color: var(--Base-Text, #574F4D);
+  color: ${({ theme }) => theme.cores.base_text};
   font-family: 'Roboto';
   font-size: 0.75rem;
   font-style: normal;
@@ -51,7 +51,7 @@ export const CartStyle = styled.button`
 
 export const Container = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   margin-top: 0.5rem;
   gap: 0.5rem;
