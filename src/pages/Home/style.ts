@@ -183,7 +183,7 @@ export const Coffees = styled.div`
       .coffee_image {
         margin-top: -1.5625rem;
         margin-bottom: 0.75rem;
-
+      }
       h2 {
         color: ${({ theme }) => theme.cores.base_subtitle};
         text-align: center;
@@ -207,8 +207,8 @@ export const Coffees = styled.div`
         padding-right: 1.25rem;
         margin-bottom: 2.06rem;
       }
-    }
-  }
+    } 
+ }
 `;
 
 
