@@ -22,7 +22,7 @@ type DataCount = {
 
 export const Contador = ({ Posicao, Image, Title }: DataCount) => {
   const { AddItem } = useCounter()
-  const initialState: StateType = { count: 0 };
+  const initialState: StateType = { count: 1 };
   
   const [quantities, dispatch] = useReducer(
    IncludeReducer as Reducer<StateType, ActionType>,
