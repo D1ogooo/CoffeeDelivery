@@ -1,3 +1,6 @@
+import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+import { useCounter } from "../../hooks/useCounter"
 import { Header } from "../../components/Header"
 import { Container } from "../../style/global"
 import { PaiContent, Left, Right } from './style'
@@ -7,6 +10,31 @@ import RelogioImage from '../../images/relogio_icon.svg'
 import SifraoImage from '../../images/Icon_sifraodedinheirobranco.svg'
 
 function PedidoFinalizado() {
+ const { dataCoffee, arrayList } = useCounter()
+ const [list, setList] = useState<boolean>(true)
+ const navigate = useNavigate()
+
+ useEffect(() => {
+  function Revise() {
+    setList(true)
+  }
+  Revise()
+  
+  const data = arrayList.find((item: string[]) => item.id === dataCoffee.id) 
+
+  if(!dataCoffee.bairro || !dataCoffee.numero || !dataCoffee.cidade || !dataCoffee.uf) {
+   navigate('/');
+  }
+
+  arrayList.length === 0 && navigate('/');
+  data ? "" : navigate('/');
+  
+ }, [])
+    
+ if(!list) {
+    return <h1>Carregando...</h1>
+ } 
+
  return (
   <>
    <Header />
@@ -19,7 +47,7 @@ function PedidoFinalizado() {
       </section>
       <section>{/* segundo section */}
        <div> {/* primeira div */}
-        <p>Entrega em <span>Rua João Daniel Martinelli, 102</span><br></br>Farrapos - Porto Alegre, RS</p>
+        <p>Entrega em <span>{dataCoffee.bairro}, {dataCoffee.numero}</span><br></br> - {dataCoffee.cidade}, {dataCoffee.uf}</p>
         <div style={{  backgroundColor: "#8047F8" }}>
          <img src={LocalImage} alt="" />
         </div>
@@ -31,7 +59,9 @@ function PedidoFinalizado() {
         </div>
        </div>
        <div> {/* terceira div */}
-        <p>Pagamento na entrega<br></br><span>Cartão de Crédito</span></p>
+        {dataCoffee.cartaoCredito && <p>Pagamento na entrega<br></br><span>Cartão de crédito</span></p>}
+        {dataCoffee.cartaoDebito &&<p>Pagamento na entrega<br></br><span>Cartão de débito</span></p>}
+        {dataCoffee.dinheiro && <p>Pagamento na entrega<br></br><span>Dinheiro</span></p>}
         <div style={{ backgroundColor: '#C47F17'}}>
          <img src={SifraoImage} alt="" />
         </div>

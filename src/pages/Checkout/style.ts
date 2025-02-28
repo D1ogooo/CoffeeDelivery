@@ -43,6 +43,7 @@ export const LeftContent = styled.div`
   text-align: right;
   font-family: "Baloo 2";
   font-size: 1rem;
+  font-size: .9rem;
   font-style: normal;
   font-weight: 400;
   line-height: 130%;
@@ -53,7 +54,7 @@ export const LeftContent = styled.div`
   color: red;
   text-align: right;
   font-family: "Baloo 2";
-  font-size: 1rem;
+  font-size: .9rem;
   font-style: normal;
   font-weight: 400;
   line-height: 130%;
@@ -99,6 +100,7 @@ export const LeftContent = styled.div`
   display: flex;
   flex-direction: column;
   width: 12.5rem;
+  height: 2.75rem;
   padding: 0.75rem;
   align-items: center;
   gap: 0.25rem;
@@ -120,7 +122,7 @@ export const LeftContent = styled.div`
 
  .secondLabel {
   width: 100%;
-  height: auto;
+  height: 2.75rem;
   display: flex;
   padding: 0.75rem;
   align-items: center;
@@ -145,6 +147,7 @@ export const LeftContent = styled.div`
  .thirdLabel {
   display: flex;
   width: 12.5rem;
+  height: 2.75rem;
   padding: 0.75rem;
   align-items: center;
   gap: 0.25rem;
@@ -167,6 +170,7 @@ export const LeftContent = styled.div`
 
  .forLabel {
   width: 100%;
+  height: 2.75rem;
   display: flex;
   padding: 0.75rem;
   align-items: center;
@@ -201,6 +205,7 @@ export const LeftContent = styled.div`
  .fiveLabel {
   display: flex;
   width: 12.5rem;
+  height: 2.75rem;
   padding: 0.75rem;
   align-items: center;
   gap: 0.25rem;
@@ -215,6 +220,7 @@ export const LeftContent = styled.div`
  .sixLabel {
   display: flex;
   width: 17.5rem;
+  height: 2.75rem;
   padding: 0.75rem;
   align-items: center;
   justify-content: space-between;
@@ -229,6 +235,7 @@ export const LeftContent = styled.div`
  .sevenLabel {
   display: flex;
   width: 3.75rem;
+  height: 2.75rem;
   padding: 0.75rem;
   align-items: center;
   gap: 0.25rem;
@@ -275,28 +282,7 @@ export const IternalCard = styled.div`
  display: flex;
  flex-direction: column;
  gap: 0.75rem;
- #ConfirmarPedido {
-  width: 100%;
-  height: auto;
-  cursor: pointer;
-  display: flex;
-  padding: 0.75rem 0.5rem;
-  justify-content: center;
-  align-items: center;
-  gap: 0.25rem;
-  align-self: stretch;
-  margin-top: .3rem;
-  border-radius: 0.375rem;
-  background: ${({ theme }) => theme.cores.yellow};
-  border: none;
-  color: ${({ theme }) => theme.cores.white};
-  font-family: Roboto;
-  font-size: 0.875rem;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 160%;
-  text-transform: uppercase;
- }
+
 
  section {
   display: flex;
@@ -331,6 +317,30 @@ export const IternalCard = styled.div`
    line-height: 130%;
   }
  }
+`
+
+export const ConfirmarPedido = styled.button`
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+  display: flex;
+  padding: 0.75rem 0.5rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+  align-self: stretch;
+  margin-top: .3rem;
+  border-radius: 0.375rem;
+  background: ${({ theme, disabled }) => disabled ? "#F15156" : theme.cores.yellow};
+  cursor: ${({ disabled }) => disabled ? "not-allowed" : "pointer"};
+  border: none;
+  color: ${({ theme }) => theme.cores.white};
+  font-family: Roboto;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 160%;
+  text-transform: uppercase;
 `
 
 export const Internal = styled.div`
@@ -473,7 +483,7 @@ export const Error = styled.div`
  color: red;
  text-align: right;
  font-family: "Baloo 2";
- font-size: 1rem;
+ font-size: .9rem;
  font-style: normal;
  font-weight: 400;
  line-height: 130%;

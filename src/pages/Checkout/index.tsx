@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Header } from "../../components/Header";
-import { Form, CheckoutContainer, Left, Right, LeftContent, MetodoPagamento, PagamentoContent, RightContent, Card, Internal, IternalCard, Error } from './style'
 import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
+import { Header } from "../../components/Header";
+import { Form, CheckoutContainer, Left, Right, LeftContent, MetodoPagamento, PagamentoContent, RightContent, Card, Internal, IternalCard, Error, ConfirmarPedido } from './style'
+import { zodResolver } from '@hookform/resolvers/zod';
 import LocalIcon from '../../images/Icon_enderecolocal.svg'
 import MoneiIcon from '../../images/Icon_sifraodedinheiroroxo.svg'
 import notadeDinheiroIcon from '../../images/Icon_notadedinheiro.svg'
@@ -11,20 +12,24 @@ import casaLotericaIcon from '../../images/Icon_caixaloterica.svg'
 import creditoIcon from '../../images/Icon_cartaodecredito.svg'
 import { ContadorCheckout } from "../../components/ContadorCheckout";
 import { useCounter } from "../../hooks/useCounter";
-import IconCoffee from '../../database/database images/oitavo.svg'
+import { useNavigate } from "react-router-dom";
+
+const regexCep = /^([\d]{2})\.*([\d]{3})-*([\d]{3})/;
 
 const productsFilterSchema = z.object({
   cep: z.string().min(8, {
     message: "O CEP deve conter exatamente 8 dígitos."
   }).max(8, {
     message: "O CEP deve conter exatamente 8 dígitos."
+  }).refine((cep) => regexCep.test(cep), {
+    message: "O CEP declarado não é válido."
   }),
   rua: z.string().min(1, {
     message: "Declare o nome da rua."
   }),
-  numero: z.number().min(1, {
+  numero: z.preprocess((val) => Number(val), z.number().min(1, {
     message: "Declare o número."
-  }),
+  })),
   complemento: z.string().optional(),
   bairro: z.string().min(1, { 
     message: "Declare o bairro."
@@ -49,10 +54,19 @@ function CheckOut() {
   const [secondisOn, setsecondisOn] = useState<boolean>(false)
   const [thirdIsOn, setThirdIsOn] = useState<boolean>(false)
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>(null);
-  const { items, handleForm } = useCounter()
+  const { items, setDataCoffee, setArrayListy } = useCounter()
+  const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors } } = useForm<productsFilterSchema>({
-   resolver: zodResolver(productsFilterSchema)
+    resolver: zodResolver(productsFilterSchema)
   });
+  
+  const id = uuidv4();
+  function handleForm(data: productsFilterSchema) {
+   setDataCoffee(data)
+   setArrayListy((prev: string[]) => [...prev, id])
+   console.log(data)
+   navigate(`/pedidoFinalizado/${id}`);
+  }
 
   const handlePaymentMethodSelection = (method: string) => {
     setSelectedPaymentMethod(method);
@@ -71,12 +85,21 @@ function CheckOut() {
     }
   };
 
-  const onSubmit = (data: any) => {
+
+  const onSubmit = (data: productsFilterSchema) => {
     if (!selectedPaymentMethod) {
       alert("Por favor, selecione um método de pagamento.");
       return;
     }
-    handleForm(data);
+  
+    const updatedData = {
+      ...data,
+      cartaoCredito: selectedPaymentMethod === "cartaoCredito",
+      cartaoDebito: selectedPaymentMethod === "cartaoDebito",
+      dinheiro: selectedPaymentMethod === "dinheiro",
+    };
+  
+    handleForm(updatedData);
   };
 
   return (
@@ -109,34 +132,42 @@ function CheckOut() {
           <p>{errors.rua.message}</p>
          </Error>}
         <div style={{ display: 'flex', gap: '0.75rem' }}>
+
          <div style={{ display: 'flex', flexDirection: 'column'}}>
          <label className="thirdLabel">
           <input type="text" placeholder="Número" {...register('numero')}/>
          </label>
           <p className='Error'>{errors.numero && errors.numero.message}</p>
          </div>
+
          <label className="forLabel">
           <input type="text" placeholder="Complemento" {...register('complemento')}/>
           <p>Opcional</p>
          </label>
+
         </div>
         <div style={{ display: 'flex', gap: '0.75rem' }}>
          <div>
          <label className="fiveLabel">
           <input type="text" placeholder="Bairro" {...register('bairro')}/>
-          <p className='Error2'>{errors.bairro && errors.bairro.message}</p>
          </label>
+          <p className='Error2'>{errors.bairro && errors.bairro.message}</p>
          </div>
+
+         <div>
          <label className="sixLabel">
           <input type="text" placeholder="Cidade" {...register('cidade')}/>
-          <p className='Error'>{errors.cidade && errors.cidade.message}</p>
          </label>
-        <div style={{ display: 'flex', marginLeft: '.125rem'}}>
+          <p className='Error'>{errors.cidade && errors.cidade.message}</p>
+         </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
         <label className="sevenLabel">
          <input type="text" placeholder="UF" maxLength={2} {...register('uf')}/>
          </label>
+         <p className='Error' style={{ marginLeft: ".1rem" }}>{errors.uf && errors.uf.message}</p>
         </div>
-         <p className='Error'>{errors.uf && errors.uf.message}</p>
+
         </div>
        </LeftContent>
        <MetodoPagamento>
@@ -153,6 +184,7 @@ function CheckOut() {
             type="button" 
             onClick={() => handlePaymentMethodSelection("cartaoCredito")} 
             className={isOn ? 'styleButtonSelected' : ''}
+            
           >
             <img src={creditoIcon} alt="" />
             Cartão de crédito
@@ -161,6 +193,7 @@ function CheckOut() {
             type="button" 
             onClick={() => handlePaymentMethodSelection("cartaoDebito")} 
             className={secondisOn ? 'styleButtonSelected' : ''}
+            
           >
             <img src={casaLotericaIcon} alt="" />
             cartão de débito
@@ -169,6 +202,7 @@ function CheckOut() {
             type="button" 
             onClick={() => handlePaymentMethodSelection("dinheiro")} 
             className={thirdIsOn ? 'styleButtonSelected' : ''}
+            
           >
             <img src={notadeDinheiroIcon} alt="" />
             dinheiro
@@ -212,7 +246,9 @@ function CheckOut() {
            <h3>Total</h3>
            <h3>R$ 33,20</h3>
           </section>
-          <input type='submit' id='ConfirmarPedido' value="confirmar pedido"/>
+          <ConfirmarPedido disabled={items.length < 1}>
+            Confirmar pedido
+          </ConfirmarPedido>
          </IternalCard>
         </Internal>
        </RightContent>
